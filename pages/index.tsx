@@ -1,16 +1,24 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import { format } from 'path';
 import { useState } from 'react';
+import { prisma } from '../lib/prisma';
 
+interface Notes {
+  notes: {
+    id: string;
+    title: string;
+    content: string;
+  }[];
+}
 interface FormData {
   title: string;
   content: string;
   id: string;
 }
 
-const Home: NextPage = () => {
+const Home = ({ notes }: Notes) => {
   const [form, setForm] = useState<FormData>({
     title: '',
     content: '',
@@ -31,6 +39,14 @@ const Home: NextPage = () => {
     }
   }
 
+  const handleSubmit = async (data: FormData) => {
+    try {
+      create(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <h1 className='mt-4 text-2xl font-bold text-center'>Notes</h1>
@@ -38,6 +54,7 @@ const Home: NextPage = () => {
         className='w-auto min-w-[25%] max-w-min mx-auto space-y-6 flex flex-col items-stretch'
         onSubmit={(e) => {
           e.preventDefault();
+          handleSubmit(form);
         }}
       >
         <input
@@ -63,3 +80,19 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const notes = await prisma?.note.findMany({
+    select: {
+      title: true,
+      id: true,
+      content: true,
+    },
+  });
+
+  return {
+    props: {
+      notes,
+    },
+  };
+};
