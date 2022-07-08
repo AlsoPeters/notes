@@ -62,6 +62,19 @@ const Home = ({ notes }: Notes) => {
     }
   }
 
+  async function updateNote(id: string) {
+    try {
+      fetch(`http://localhost:3000/api/note/${id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'PUT',
+      }).then(() => refreshData());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleSubmit = async (data: FormData) => {
     try {
       create(data);
@@ -107,6 +120,12 @@ const Home = ({ notes }: Notes) => {
                   <h3 className='font-bold'>{note.title}</h3>
                   <p className='text-sm'>{note.content}</p>
                 </div>
+                <button
+                  className='px-3 mr-2 text-white bg-yellow-500 rounded'
+                  onClick={() => updateNote(note.id)}
+                >
+                  Update
+                </button>
                 <button
                   className='px-3 text-white bg-red-500 rounded'
                   onClick={() => deleteNote(note.id)}
