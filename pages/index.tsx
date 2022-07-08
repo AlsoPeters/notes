@@ -75,6 +75,20 @@ const Home = ({ notes }: Notes) => {
           Add +
         </button>
       </form>
+      <div className='w-auto min-w-[25%] max-w-min mt-20 mx-auto space-y-6 flex flex-col items-stretch'>
+        <ul>
+          {notes.map((note) => (
+            <li className='p-2 border-b border-gray-600' key={note.id}>
+              <div className='flex justify-between'>
+                <div className='flex-1'>
+                  <h3 className='font-bold'>{note.title}</h3>
+                  <p className='text-sm'>{note.content}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
