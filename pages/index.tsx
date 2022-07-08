@@ -40,6 +40,9 @@ const Home: NextPage = () => {
           value={form.content}
           onChange={(e) => setForm({ ...form, content: e.target.value })}
         />
+        <button type='submit' className='p-1 text-white bg-blue-500 rounded'>
+          Add +
+        </button>
       </form>
     </div>
   );
