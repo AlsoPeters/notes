@@ -18,8 +18,6 @@ export default async function handler(
     const note = await prisma.note.update({
       where: { id: Number(noteId) },
       data: {
-        // I need to find out how to pull data from the input fields here instead of hard coding strings.
-        // https://youtu.be/cQ6V7ZHzg8c?t=2879
         title,
         content,
       },
