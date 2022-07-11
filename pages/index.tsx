@@ -62,14 +62,18 @@ const Home = ({ notes }: Notes) => {
     }
   }
 
-  async function updateNote(id: string) {
+  async function updateNote(id: string, title: string, content: string) {
     try {
       fetch(`http://localhost:3000/api/note/${id}`, {
+        body: JSON.stringify({ title: form.title, content: form.content }),
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'PUT',
-      }).then(() => refreshData());
+      }).then(() => {
+        setForm({ title: '', content: '', id: '' });
+        refreshData();
+      });
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +126,7 @@ const Home = ({ notes }: Notes) => {
                 </div>
                 <button
                   className='px-3 mr-2 text-white bg-yellow-500 rounded'
-                  onClick={() => updateNote(note.id)}
+                  onClick={() => updateNote(note.id, note.title, note.content)}
                 >
                   Update
                 </button>

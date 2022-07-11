@@ -7,6 +7,7 @@ export default async function handler(
 ) {
   const noteId = req.query.id;
 
+  const { title, content } = req.body;
   if (req.method === 'DELETE') {
     const note = await prisma.note.delete({
       where: { id: Number(noteId) },
@@ -19,8 +20,8 @@ export default async function handler(
       data: {
         // I need to find out how to pull data from the input fields here instead of hard coding strings.
         // https://youtu.be/cQ6V7ZHzg8c?t=2879
-        title: 'This is a test',
-        content: 'Content test',
+        title,
+        content,
       },
     });
     res.json(note);
