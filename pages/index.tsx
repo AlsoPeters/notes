@@ -34,7 +34,7 @@ const Home = ({ notes }: Notes) => {
 
   async function create(data: FormData) {
     try {
-      fetch('http://notes-hazel.vercel.app/api/create', {
+      fetch('https://notes-hazel.vercel.app/api/create', {
         body: JSON.stringify(data),
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const Home = ({ notes }: Notes) => {
 
   async function deleteNote(id: string) {
     try {
-      fetch(`http://notes-hazel.vercel.app/api/note/${id}`, {
+      fetch(`https://notes-hazel.vercel.app/api/note/${id}`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -64,7 +64,7 @@ const Home = ({ notes }: Notes) => {
 
   async function updateNote(id: string, title: string, content: string) {
     try {
-      fetch(`http://notes-hazel.vercel.app/api/note/${id}`, {
+      fetch(`https://notes-hazel.vercel.app/api/note/${id}`, {
         body: JSON.stringify({ title: form.title, content: form.content }),
         headers: {
           'Content-Type': 'application/json',
